@@ -11,7 +11,7 @@
 
 
 ## Commit Syntax
-Beim Commit wird ein Beschreibungstext verlangt. Hier die Syntax:
+    Beim Commit wird ein Beschreibungstext verlangt. Hier die Syntax:
     - Title der Veränderung
     - Beschreibungstext (Optional)
         - M:=Modified (Präfix für eine Liste veränderter Dateien)
