@@ -1,0 +1,58 @@
+syntax for Grammar:
+Tokens beginning with uppercase Letter are non-terminals, otherwise they are terminals.
+Tokens can be encased in "", so whitespace can be used.
+_______________________________________________________________________________________
+
+
+TAKING CARE OF MAIN
+
+baseline:
+"
+package main
+func main(){}
+"
+
+Tokens:
+- startclause := "package main \n func main()"  
+- {
+- }
+- epsilon
+
+Root -> startclause { Main }
+Main -> epsilon
+_______________________________________________________________________________________
+
+
+ADDING BASIC ARITHMETIC
+
+baseline:
+MAIN, Addition, Multiplikation, Parenthesis
+
+example:
+"
+package main
+func main(){
+	5.4*(4.3+3.4)
+}
+"
+ 
+note: - Technically this is not correct 'Go', but for this stage it should suffice
+	  - All Numbers are floats
+
+Tokens:
+- startclause := "package main \n func main()"  
+- {
+- }
+- (
+- )
+- *
+- +
+- number
+- epsilon
+
+Root    -> startclause { Main }
+Main    -> Term Sum
+Sum     -> + Term Sum | epsilon
+Term    -> Delim Product
+Product -> * Delim Product
+Delim   -> ( Main ) | number
