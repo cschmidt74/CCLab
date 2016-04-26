@@ -1,5 +1,5 @@
 syntax for Grammar:
-Tokens beginning with uppercase Letter are non-terminals, otherwise they are terminals.
+Tokens beginning with an uppercase Letter are non-terminals, otherwise they are terminals.
 Tokens can be encased in "", so whitespace can be used.
 _______________________________________________________________________________________
 
@@ -36,8 +36,8 @@ func main(){
 }
 "
  
-note: - Technically this is not correct 'Go', but for this stage it should suffice
-	  - All Numbers are floats
+note: - Technically this is not correct 'Go', but at this stage it should suffice
+      - All Numbers are floats
 
 Tokens:
 - startclause := "package main \n func main()"  
@@ -53,6 +53,6 @@ Tokens:
 Root    -> startclause { Main }
 Main    -> Term Sum
 Sum     -> + Term Sum | epsilon
-Term    -> Delim Product
-Product -> * Delim Product
-Delim   -> ( Main ) | number
+Term    -> Factor Product
+Product -> * Factor Product
+Factor   -> ( Main ) | number
