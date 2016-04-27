@@ -7,6 +7,7 @@ class Parser {
 public:
 	Parser(){
 		hasParsed = false;
+		hasErrors = false;
 	}
 
 	void init(std::string filePath){
@@ -51,12 +52,14 @@ public:
 				      	next_token = lex->getToken(); //consume )
 					    return result; //Factor   -> ( Main )
 				      }
+				      hasErrors = true;
 				      addErrorMsg("Expected Right Parenthesis");
 				      return nullptr;
 			case tok_number: result = new NumberNode(lex->getNumVal()); 
 			                 next_token = lex->getToken();
 			                 return result;
-			default: addErrorMsg("Expected Left Parenthesis or a Number");
+			default: hasErrors = true;
+					 addErrorMsg("Expected Left Parenthesis or a Number");
 					 return nullptr;
 		}
 	}
@@ -67,6 +70,7 @@ public:
 
 	bool hasParsed;
 
+	bool hasErrors;
 	std::vector<std::string> errorList;
 
 	lexer* lex;
