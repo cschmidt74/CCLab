@@ -54,11 +54,11 @@ Symbol := Token
 
 
 ## Grammar
-Main      -> Term Sum
-Sum       -> + Term Sum | epsilon
-Term      -> Factor Product
-Product   -> * Factor Product | epsilon 
-Factor    -> ( Main ) | number
+Main      -> Term Sum  
+Sum       -> + Term Sum | epsilon  
+Term      -> Factor Product  
+Product   -> * Factor Product | epsilon   
+Factor    -> ( Main ) | number  
 
 ## Regular expression
 n((p|m)n)*((p|n)ln((p|m)n)*r)*
