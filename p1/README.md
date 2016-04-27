@@ -11,16 +11,18 @@ Items beginning with an uppercase Letter are non-terminals, otherwise they are t
 # TAKING CARE OF MAIN
 
 ## baseline
-"  
+```
 package main  
 func main(){}  
-"  
+```
 
 ## Tokens
+```
 - startclause := "package main \n func main()"  
 - {
 - }
 - epsilon
+```
 
 ## Grammar
 Root -> startclause { Main }  
@@ -45,12 +47,14 @@ note: - Technically this is not correct 'Go', but at this stage it should suffic
 
 ## Tokens
 Symbol := Token  
+```
 - l := (
 - r := )
 - m := *
 - p := +
 - n := number
 - e := epsilon
+```
 
 ## Grammar
 Main    -> Term Sum
