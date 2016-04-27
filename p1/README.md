@@ -1,12 +1,11 @@
 The Compiler will only handle code belonging to the main() function.  
 This means, that the input will be any Go-Code that would usually be put in the main-method.  
 Everything else (if needed) will be added around that code to effectivly build a working Go-programm.  
-_______________________________________________________________________________________
-
+  
+  
 syntax for Grammar:  
-Tokens beginning with an uppercase Letter are non-terminals, otherwise they are terminals.  
-Tokens can be encased in "", so whitespace can be used.  
-_______________________________________________________________________________________
+Items beginning with an uppercase Letter are non-terminals, otherwise they are terminals.  
+
 
 
 # TAKING CARE OF MAIN
