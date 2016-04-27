@@ -1,5 +1,3 @@
-Directories with a numbered postfix serve as a backup and can be completely ignored.
-_______________________________________________________________________________________
 The Compiler will only handle code belonging to the main() function.  
 This means, that the input will be any Go-Code that would usually be put in the main-method.  
 Everything else (if needed) will be added around that code to effectivly build a working Go-programm.  
