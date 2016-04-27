@@ -10,7 +10,6 @@ public:
 
 class MainNode: public TreeNode{
 public:	
-	MainNode(){}
 	MainNode(TreeNode* _term, TreeNode* _sum)
 	: term(_term), sum(_sum){
 
@@ -26,7 +25,6 @@ public:
 
 class TermNode: public TreeNode{
 public:	
-	TermNode(){}
 	TermNode(TreeNode* _factor, TreeNode* _product)
 	: factor(_factor), product(_product){
 
@@ -42,7 +40,6 @@ public:
 
 class SumNode: public TreeNode{
 public:	
-	SumNode(){}
 	SumNode(TreeNode* _term, TreeNode* _sum)
 	: term(_term), sum(_sum){
 
@@ -58,7 +55,6 @@ public:
 
 class FactorNode: public TreeNode{
 public:	
-	FactorNode(){}
 	FactorNode(TreeNode* _child)
 	: child(_child){
 
@@ -79,7 +75,6 @@ public:
 
 class ProductNode: public TreeNode{
 public:	
-	ProductNode(){}
 	ProductNode(TreeNode* _factor, TreeNode* _product)
 	: factor(_factor), product(_product){
 
@@ -95,7 +90,6 @@ public:
 
 class NumberNode: public TreeNode{
 public:	
-	NumberNode(){}
 	NumberNode(int _value)
 	: value(_value){
 
