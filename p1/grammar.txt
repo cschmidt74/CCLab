@@ -54,5 +54,5 @@ Tokens:
 Main    -> Term Sum
 Sum     -> + Term Sum | epsilon
 Term    -> Factor Product
-Product -> * Factor Product
+Product -> * Factor Product | epsilon 
 Factor   -> ( Main ) | number
