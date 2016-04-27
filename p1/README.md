@@ -17,12 +17,10 @@ func main(){}
 ```
 
 ## Tokens
-```
 - startclause := "package main \n func main()"  
 - {
 - }
 - epsilon
-```
 
 ## Grammar
 Root -> startclause { Main }  
@@ -47,21 +45,20 @@ note: - Technically this is not correct 'Go', but at this stage it should suffic
 
 ## Tokens
 Symbol := Token  
-```
 - l := (
 - r := )
 - m := *
 - p := +
 - n := number
 - e := epsilon
-```
+
 
 ## Grammar
-Main    -> Term Sum
-Sum     -> + Term Sum | epsilon
-Term    -> Factor Product
-Product -> * Factor Product | epsilon 
-Factor   -> ( Main ) | number
+Main      -> Term Sum
+Sum       -> + Term Sum | epsilon
+Term      -> Factor Product
+Product   -> * Factor Product | epsilon 
+Factor    -> ( Main ) | number
 
 ## Regular expression
 n((p|m)n)*((p|n)ln((p|m)n)*r)*
