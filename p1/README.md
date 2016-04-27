@@ -60,3 +60,4 @@ Product -> * Factor Product | epsilon
 Factor   -> ( Main ) | number
 
 ## Regular expression
+n((p|m)n)*((p|n)ln((p|m)n)*r)*
