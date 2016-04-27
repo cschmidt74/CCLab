@@ -44,13 +44,13 @@ note: - Technically this is not correct 'Go', but at this stage it should suffic
       - All Numbers are floats
 
 ## Tokens
-Tokens:            symbol:
-- (                l
-- )                r
-- *                m
-- +                p
-- number           n
-- epsilon          e
+Symbol := Token  
+- l := (
+- r := )
+- m := *
+- p := +
+- n := number
+- e := epsilon
 
 ## Grammar
 Main    -> Term Sum
