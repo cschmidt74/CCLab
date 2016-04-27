@@ -81,6 +81,10 @@ public:
 
 		return ThisChar;
 	}
+
+	float getNumVal(){
+		return NumVal;
+	}
 private:
 	int input_position;
 	string file_input;

@@ -4,11 +4,18 @@ enum nodeType{
 
 class TreeNode{
 public:
+	TreeNode(){}
 	virtual nodeType getNodeType() = 0;
 };
 
-class MainNode: TreeNode{
+class MainNode: public TreeNode{
 public:	
+	MainNode(){}
+	MainNode(TreeNode* _term, TreeNode* _sum)
+	: term(_term), sum(_sum){
+
+	}
+
 	virtual nodeType getNodeType(){
 		return ntMAIN;
 	};
@@ -17,8 +24,14 @@ public:
 	TreeNode* sum;
 };
 
-class TermNode: TreeNode{
+class TermNode: public TreeNode{
 public:	
+	TermNode(){}
+	TermNode(TreeNode* _factor, TreeNode* _product)
+	: factor(_factor), product(_product){
+
+	}
+
 	virtual nodeType getNodeType(){
 		return ntTERM;
 	};
@@ -27,8 +40,14 @@ public:
 	TreeNode* product;
 };
 
-class SumNode: TreeNode{
+class SumNode: public TreeNode{
 public:	
+	SumNode(){}
+	SumNode(TreeNode* _term, TreeNode* _sum)
+	: term(_term), sum(_sum){
+
+	}
+
 	virtual nodeType getNodeType(){
 		return ntSUM;
 	};
@@ -37,18 +56,35 @@ public:
 	TreeNode* sum;
 };
 
-class FactorNode: TreeNode{
+class FactorNode: public TreeNode{
 public:	
+	FactorNode(){}
+	FactorNode(TreeNode* _child)
+	: child(_child){
+
+	}
+
 	virtual nodeType getNodeType(){
 		return ntFACTOR;
 	};
 
 	TreeNode* child;
-	bool isNumber;
+
+	bool isNum(){
+		if(child->getNodeType() == ntNUMBER) 
+			return 1;
+		return 0;
+	}
 };
 
-class ProductNode: TreeNode{
+class ProductNode: public TreeNode{
 public:	
+	ProductNode(){}
+	ProductNode(TreeNode* _factor, TreeNode* _product)
+	: factor(_factor), product(_product){
+
+	}
+
 	virtual nodeType getNodeType(){
 		return ntPRODUCT;
 	};
@@ -57,8 +93,14 @@ public:
 	TreeNode* product;
 };
 
-class NumberNode: TreeNode{
+class NumberNode: public TreeNode{
 public:	
+	NumberNode(){}
+	NumberNode(int _value)
+	: value(_value){
+
+	}
+
 	virtual nodeType getNodeType(){
 		return ntNUMBER;
 	};
