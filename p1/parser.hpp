@@ -15,42 +15,43 @@ public:
 
 
 	void print_tree(TreeNode* node, int tabs){
-		switch(node->getNodeType()){
-			case 0:
+
+		for(int i = 0; i < tabs; i++)
+			cout << "\t";
+		cout << endl;
+
+		nodeType nt = node->getNodeType();
+
+		if(nt == ntMAIN){
 				MainNode *child = dynamic_cast<MainNode *>(node);
 				cout << "Main" << endl;
 				print_tree(child->sum, tabs + 1);
 				print_tree(child->term, tabs + 1);
-				break;
-			case 1:
+		} else if(nt == ntTERM){
 				TermNode *child2 = dynamic_cast<TermNode *>(node);
 				cout << "Term" << endl;
 				print_tree(child2->factor, tabs + 1);
-				print_tree(child2->product, tabs + 1;
-				break;
-			case 2:
-				SumNode *child3 = dynamic_caast<SumNode *>(node);
+				print_tree(child2->product, tabs + 1);
+		} else if(nt == ntSUM){
+				SumNode *child3 = dynamic_cast<SumNode *>(node);
 				cout << "Sum" << endl;
 				print_tree(child3->term, tabs + 1);
 				print_tree(child3->sum, tabs + 1);
-				break;
-			case 3:
+		} else if(nt == ntFACTOR){
 				FactorNode *child4 = dynamic_cast<FactorNode *>(node);
 				cout << "Factor" << endl;
 				print_tree(child4->child, tabs + 1);
-				break,
-			case 4:
+		} else if(nt == ntPRODUCT){
 				ProductNode *child5 = dynamic_cast<ProductNode *>(node);
 				cout << "Product" << endl;
 				print_tree(child5->product, tabs + 1);
 				print_tree(child5->factor, tabs + 1);
-				break;
-			case 5:
-				cout << "Number" << endl;
+		} else if(nt == ntNUMBER){
+			cout << "number" << endl;
+		} else {
+			//some kind of error
 		}
-		for(int i = 0; i < tabs; i++)
-			cout << "\t";
-		cout << endl;
+
 	}
 
 
@@ -109,6 +110,16 @@ public:
 
 	void addErrorMsg(std::string msg){
 		errorList.push_back(msg);
+	}
+
+	TreeNode* getRoot(){
+		if (hasParsed){	
+			return root;
+		}
+		else {
+			//errormsg
+			return nullptr;	
+		}
 	}
 
 	bool hasParsed;
