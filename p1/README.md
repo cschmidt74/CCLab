@@ -1,0 +1,10 @@
+- Vagrant installieren  
+    - [LINK] (https://www.vagrantup.com/docs/installation/)
+- Vagrant starten
+    - Im Terminal oder in der Konsole zum Ordner mit 'Vagrantfile' navigieren
+    - 'vagrant up'  (kann sehr lange dauern)
+    - 'vagrant ssh'
+        - Sollte es hier Probleme geben: 'vagrant destroy' und Vagrant nochmal starten. Bei mir hat das funktioniert
+- In vagrant@archlinux
+    - 'cd /vagrant/' (hier befindet sich der geteilte Ordner, in der sich 'Vagrantfile' befindet)
+    - im 'GoLangParser'-Ordner befindet sich eine makefile, die man einfach mit 'make' ausführen kann.
