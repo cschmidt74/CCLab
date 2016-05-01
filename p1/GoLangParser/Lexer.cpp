@@ -220,7 +220,7 @@ bool Lexer::isSpace(char c) {
  */
 bool Lexer::isLetter(char c) {
     int ascii = (int) c;
-    if ((65 <= ascii && ascii <= 90) || (97 <= ascii) && (ascii <= 122)) return true;
+    if ((65 <= ascii && ascii <= 90) || (97 <= ascii && ascii <= 122)) return true;
     else return false;
 }
 

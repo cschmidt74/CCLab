@@ -21,7 +21,8 @@
 int main(int argc, char** argv) {
     if(argc == 2) {
         Parser p;
-        p.start(argv[1]);
+        //p.start(argv[1]);
+        p.start("C:/Users/CSean/syncthing/H15/hda/s5-ss16/cc/p/git/CCLab/p1/sourcecode.txt");
     }
     return 0;
 }
