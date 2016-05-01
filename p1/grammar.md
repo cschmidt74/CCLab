@@ -1,5 +1,6 @@
 # Grammar
 [official go-lang notation documentation] (https://golang.org/ref/spec#Notation)
+- [Package Clause] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#grammar-1)
 ## Syntax
 - CamelCase: Non-Terminals
 - lowsercase: terminals / tokens
