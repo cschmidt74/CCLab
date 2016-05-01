@@ -12,15 +12,14 @@
 - "quotation mark": char / string
 
 ## PackageClause
-### [Golang](https://golang.org/ref/spec#PackageClause)
+[Golang](https://golang.org/ref/spec#PackageClause)
   
-### converted
-#### tokens
+### tokens
 - package
 - unicode_digit
 - unicode_letter
   
-#### grammar
+### grammar
 ```
 PackageClause -> package PackageName  
 PackageName -> Identifier  
@@ -31,25 +30,23 @@ Letter -> unicode_letter | "_"
 ```  
 
 ## Import declarations
-### [Golang](https://golang.org/ref/spec#ImportDecl)
+[Golang](https://golang.org/ref/spec#ImportDecl)
   
-### converted (& simplified)
-#### tokens
+### tokens
 - import
   
-#### grammar
+### grammar
 ```
 ImportDecl -> import PackageName
 /* PackageName: see #PackageClause */
 ```
 ## Function declarations
-### [Golang](https://golang.org/ref/spec#Function_declarations)
+[Golang](https://golang.org/ref/spec#Function_declarations)
   
-### converted (& simplified)
-#### tokens
+### tokens
 - func
 
-#### grammar
+### grammar
 ```
 FunctionDecl -> func Identifier Function
 Function -> Signature Block
@@ -59,12 +56,11 @@ StatementList -> Statement ";" StatementList | epsilon  /* unsure about this one
 ```
 
 ## Statements
-### [Golang] (https://golang.org/ref/spec#Statement)
+[Golang] (https://golang.org/ref/spec#Statement)
   
-###converted (& simplified)
-#### tokens
+### tokens
 
-#### grammar
+### grammar
 ```
 Statement -> Declaration | SimpleStmt | ReturnStmt    /* see link above for more options */
 SimpleStmt -> EmptyStmt | ExpressionStmt | Assignment 
