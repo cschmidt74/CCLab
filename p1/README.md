@@ -1,5 +1,6 @@
 - Vagrant installieren
     - [LINK] (https://www.vagrantup.com/docs/installation/)  
+    - [mehr Infos] (https://www.vagrantup.com/docs/getting-started/)
 
 - Vagrant starten
     - Im Terminal oder in der Konsole zum Ordner mit 'Vagrantfile' navigieren
