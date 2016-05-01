@@ -1,6 +1,10 @@
 # Grammar
 [official go-lang notation documentation] (https://golang.org/ref/spec#Notation)
-- [Package Clause] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#grammar-1)
+- [Package Clause] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#grammar-1)  
+- [Import declarations] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#grammar-2)
+- [Function declarations] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#grammar-3)
+- [Statements] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#grammar-4)
+
 ## Syntax
 - CamelCase: Non-Terminals
 - lowsercase: terminals / tokens
