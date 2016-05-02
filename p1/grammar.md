@@ -11,6 +11,15 @@
 - epsilon: epsilon
 - "quotation mark": char / string
 
+## StartingPoint
+
+## tokens
+
+## grammar
+```
+StartingPoint -> PackageClause ImportDecl FunctionDecl
+```
+
 ## PackageClause
 [Golang](https://golang.org/ref/spec#PackageClause)
   
@@ -20,7 +29,7 @@
   
 ### grammar
 ```
-PackageClause -> package PackageName  
+PackageClause -> package PackageName
 PackageName -> Identifier   /* consciously kept redundance, in case PackageName has special errorchecking or the like*/
 Identifier -> string  
 ```  
@@ -33,7 +42,8 @@ Identifier -> string
   
 ### grammar
 ```
-ImportDecl -> import PackageName
+ImportDecl -> import PackageName ImportDeclCont
+ImportDeclCont -> ImportDecl | epsilon
 /* PackageName: see #PackageClause */
 ```
 ## Function declarations
