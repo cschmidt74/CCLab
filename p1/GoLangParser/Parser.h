@@ -35,12 +35,15 @@ private:
     void errormsg(std::string type, std::string value);
     void debugmsg(std::string node);
 
+    /* StartingPoint */
+    TreeNode* parseStartingPoint();
     /* PackageClause */
     TreeNode* parsePackageClause();
     TreeNode* parsePackageName();
     TreeNode* parseIdentifier();
     /* Import declarations */
     TreeNode* parseImportDecl();
+    TreeNode* parseImportDeclCont();
     /* Function declarations */
     TreeNode* parseFunctionDecl();
     TreeNode* parseFunctionName();

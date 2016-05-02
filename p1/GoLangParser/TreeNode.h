@@ -1,7 +1,7 @@
 #include <string>
 
 enum nodeType{
-    nt_packageClause, nt_packageName, nt_identifier
+    nt_startingPoint, nt_packageClause, nt_packageName, nt_identifier
 };
 
 class TreeNode{
@@ -10,8 +10,24 @@ public:
     virtual nodeType getNodeType() = 0;
 };
 
-/* PackageClause */
+/* StartinPoint */
+class StartingPointNode : public TreeNode{
+public:
+	StartingPointNode(TreeNode* _packageclause, TreeNode* _importdecl, TreeNode* _functiondecl)
+	: packageclause(_packageclause), importdecl(_importdecl), functiondecl(_functiondecl){}
 
+	virtual nodeType getNodeType(){ return nt_startingPoint; }
+
+	TreeNode* getPackageClause(){ return packageclause; }
+	TreeNode* getImportdecl(){ return importdecl; }
+	TreeNode* getFunctiondecl(){ return functiondecl; }
+private:
+	TreeNode* packageclause;
+	TreeNode* importdecl;
+	TreeNode* functiondecl;
+};
+
+/* PackageClause */
 class PackageClauseNode : public TreeNode{
 public:
 	PackageClauseNode(TreeNode* _packageName)
@@ -52,3 +68,9 @@ public:
 private:
 	std::string identifier;
 };
+
+/* Import declarations */
+
+/* Function declarations */
+
+/* Statements */

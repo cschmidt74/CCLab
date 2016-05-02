@@ -41,19 +41,14 @@ void Parser::parse() {
     //Parser Stuff
     lexer.resetTokenCount();
 
-/*
-    while(lexer.getNextToken(currentToken)) {
-        //Start Parsing here with currentToken
-        std::cout << "line: " << currentToken.getLine() << ": " << currentToken.getType() << ": " << currentToken.getValue() << std::endl;
-    }
-*/
-    std::cout << "starting parser ..................................................." << std::endl;
+    if(DEBUG)
+        std::cout << "starting parser ..." << std::endl;
 
     if(lexer.getNextToken(currentToken) == false){
         std::cout << "Cannot Read next Token. Are you sure, the test-file is not empty?" << std::endl;
     }
 
-    root = parsePackageClause();
+    root = parsePackageClause(); // usually start at parseStartingPoint!!!!
 
 }
 
@@ -85,6 +80,12 @@ bool Parser::consumeToken(){
         return false;
     }
     return true;
+}
+
+/* StartingPoint */
+TreeNode* Parser::parseStartingPoint(){
+    debugmsg("parseStartingPoint");
+    return new StartingPointNode( parsePackageClause(), parseImportDecl(), parseFunctionDecl() );
 }
 
 /* PackageClause */
@@ -124,7 +125,10 @@ TreeNode* Parser::parseIdentifier(){
 }
 
 /* Import declarations */
-TreeNode* parseImportDecl(){   
+TreeNode* Parser::parseImportDecl(){   
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseImportDeclCont(){
     return nullptr; //just to keep warning-messages away
 }
 
