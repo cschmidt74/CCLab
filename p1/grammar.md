@@ -23,7 +23,7 @@
 ### grammar
 ```
 PackageClause -> package PackageName  
-PackageName -> Identifier  
+PackageName -> Identifier   /* consciously kept redundance, in case PackageName has special errorchecking or the like*/
 Identifier -> string  
 ```  
 
