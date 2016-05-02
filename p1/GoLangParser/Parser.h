@@ -27,15 +27,13 @@ public:
     void start(std::string filepath);
 private:
     Lexer lexer;
-
+    Token currentToken;
     TreeNode* root;
 
     /* PackageClause */
     TreeNode* parsePackageClause();
     TreeNode* parsePackageName();
     TreeNode* parseIdentifier();
-    TreeNode* parseIdenCont();
-    TreeNode* parseLetter();
     /* Import declarations */
     TreeNode* parseImportDecl();
     /* Function declarations */

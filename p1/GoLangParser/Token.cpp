@@ -19,6 +19,12 @@ Token::Token(std::string type, std::string value, int line){
     this->line = line;
 }
 
+Token::Token(){
+    this->type = "";
+    this->value = "";
+    this->line = 0;
+}
+
 Token::~Token() {
 }
 

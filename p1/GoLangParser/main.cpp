@@ -17,8 +17,9 @@
 
 /*
  * Main function
+ * int argc, char** argv
  */
-int main(int argc, char** argv) {
+int main(void) {
    
    	Parser p;
     p.start("/vagrant/sourcecode.txt");

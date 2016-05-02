@@ -39,7 +39,7 @@ void Parser::lex(std::string filepath) {
 void Parser::parse() {
     //Parser Stuff
     lexer.resetTokenCount();
-    Token currentToken("","",0);
+
     while(lexer.getNextToken(currentToken)) {
         //Start Parsing here with currentToken
         std::cout << "Test: " << currentToken.getValue() << std::endl;
@@ -49,4 +49,74 @@ void Parser::parse() {
 void Parser::start(std::string filepath) {
     lex(filepath);
     parse();
+}
+
+/* PackageClause */
+TreeNode* Parser::parsePackageClause(){
+
+    /* TODO: what can be expected as a return value from getValue() and getType() */
+
+    if(currentToken.getValue() == "package") {
+        // open parsePackageName
+    }
+
+    std::cout << "Error at PackageClause at line " << currentToken.getLine() << std::endl;
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parsePackageName(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseIdentifier(){
+    return nullptr; //just to keep warning-messages away
+}
+
+/* Import declarations */
+TreeNode* parseImportDecl(){   
+    return nullptr; //just to keep warning-messages away
+}
+
+/* Function declarations */
+TreeNode* Parser::parseFunctionDecl(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseFunctionName(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseFunction(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseSignature(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseFunctionBody(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseBlock(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseStatementList(){
+    return nullptr; //just to keep warning-messages away
+}
+
+/* Statements */
+TreeNode* Parser::parseStatement(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseSimpleStmt(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseEmptyStmt(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseDeclaration(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseReturnStmt(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseExpressionStmt(){
+    return nullptr; //just to keep warning-messages away
+}
+TreeNode* Parser::parseAssignment(){
+    return nullptr; //just to keep warning-messages away
 }

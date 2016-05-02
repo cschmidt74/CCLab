@@ -17,8 +17,9 @@
 #include <string>
 
 class Token {
-public:
+public: 
     Token(std::string type, std::string value, int line);
+    Token();
     virtual ~Token();
     std::string getType();
     std::string getValue();
