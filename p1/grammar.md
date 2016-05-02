@@ -16,8 +16,6 @@
   
 ### tokens
 - package
-- unicode_digit
-- unicode_letter
 - string
   
 ### grammar
