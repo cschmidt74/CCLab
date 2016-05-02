@@ -15,6 +15,7 @@
 #define PARSER_H
 
 #include "Lexer.h"
+#include "TreeNode.h"
 
 class Parser {
 public:
@@ -26,6 +27,33 @@ public:
     void start(std::string filepath);
 private:
     Lexer lexer;
+
+    TreeNode* root;
+
+    /* PackageClause */
+    TreeNode* parsePackageClause();
+    TreeNode* parsePackageName();
+    TreeNode* parseIdentifier();
+    TreeNode* parseIdenCont();
+    TreeNode* parseLetter();
+    /* Import declarations */
+    TreeNode* parseImportDecl();
+    /* Function declarations */
+    TreeNode* parseFunctionDecl();
+    TreeNode* parseFunctionName();
+    TreeNode* parseFunction();
+    TreeNode* parseSignature();
+    TreeNode* parseFunctionBody();
+    TreeNode* parseBlock();
+    TreeNode* parseStatementList();
+    /* Statements */
+    TreeNode* parseStatement();
+    TreeNode* parseSimpleStmt();
+    TreeNode* parseEmptyStmt();
+    TreeNode* parseDeclaration();
+    TreeNode* parseReturnStmt();
+    TreeNode* parseExpressionStmt();
+    TreeNode* parseAssignment();
 };
 
 #endif /* PARSER_H */

@@ -49,7 +49,7 @@ private:
     std::vector<std::string> lines;
     std::vector<std::string> keywords;
     std::vector<Token> tokens;
-    int tokenCount;
+    size_t tokenCount;
 };
 
 #endif /* LEXER_H */

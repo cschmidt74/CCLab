@@ -34,20 +34,21 @@ bool Lexer::readSourcecode(std::string filepath) {
         lines.push_back(line);
     }
     filestream.close();
+    return true;
 }
 
 /*
  * Prints out each line of the sourcecode member variable
  */
 void Lexer::printSourcecode() {
-    for (int i = 0; i < lines.size(); i++) std::cout << std::setw(4) << std::left << i+1 << lines[i] << std::endl;
+    for (unsigned i = 0; i < lines.size(); i++) std::cout << std::setw(4) << std::left << i+1 << lines[i] << std::endl;
 }
 
 /*
  * Calls splitLine() for every element in lines member variable
  */
 int Lexer::createTokens() {
-    for (int i = 0; i < lines.size(); i++) {
+    for (unsigned i = 0; i < lines.size(); i++) {
         if (!splitLine(lines[i], i + 1)) return i + 1;
     }
     return 0;
@@ -181,7 +182,7 @@ bool Lexer::splitLine(std::string line, int lineNumber) {
  * Prints out each token in the tokens member variable
  */
 void Lexer::printTokens() {
-    for (int i = 0; i < tokens.size(); i++) {
+    for (unsigned i = 0; i < tokens.size(); i++) {
         std::cout << tokens[i].getType() << " on line " << tokens[i].getLine() << " has the value: " << tokens[i].getValue() << std::endl;
     }
 }
@@ -201,7 +202,7 @@ void Lexer::initKeywords() {
  * Checks if a word is in the keywords vector or not
  */
 bool Lexer::isKeyword(std::string word) {
-    for (int i = 0; i < keywords.size(); i++) {
+    for (unsigned i = 0; i < keywords.size(); i++) {
         if (keywords[i] == word) return true;
     }
     return false;
