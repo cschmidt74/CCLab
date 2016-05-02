@@ -1,2 +1,3 @@
-*.o
-exec
+GoLangParser/exec
+GoLangParser/bin/
+GoLangParser/build/

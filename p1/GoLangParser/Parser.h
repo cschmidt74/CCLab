@@ -29,6 +29,11 @@ private:
     Lexer lexer;
     Token currentToken;
     TreeNode* root;
+    bool DEBUG;
+
+	bool consumeToken();
+    void errormsg(std::string type, std::string value);
+    void debugmsg(std::string node);
 
     /* PackageClause */
     TreeNode* parsePackageClause();

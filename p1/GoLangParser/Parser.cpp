@@ -14,6 +14,7 @@
 #include "Parser.h"
 
 Parser::Parser() {
+    DEBUG = true;
 }
 
 Parser::~Parser() {
@@ -40,10 +41,20 @@ void Parser::parse() {
     //Parser Stuff
     lexer.resetTokenCount();
 
+/*
     while(lexer.getNextToken(currentToken)) {
         //Start Parsing here with currentToken
-        std::cout << "Test: " << currentToken.getValue() << std::endl;
+        std::cout << "line: " << currentToken.getLine() << ": " << currentToken.getType() << ": " << currentToken.getValue() << std::endl;
     }
+*/
+    std::cout << "starting parser ..................................................." << std::endl;
+
+    if(lexer.getNextToken(currentToken) == false){
+        std::cout << "Cannot Read next Token. Are you sure, the test-file is not empty?" << std::endl;
+    }
+
+    root = parsePackageClause();
+
 }
 
 void Parser::start(std::string filepath) {
@@ -51,23 +62,65 @@ void Parser::start(std::string filepath) {
     parse();
 }
 
+void Parser::errormsg(std::string type, std::string value){
+    std::cout << "Error @PackageClause on line " << currentToken.getLine() << std::endl;
+
+    std::cout << "expected '" << type                   << ": " << value                   << "'" <<
+    std::endl << "received '" << currentToken.getType() << ": " << currentToken.getValue() << "'" <<
+    std::endl ;
+}
+
+void Parser::debugmsg(std::string node){
+    if(DEBUG){
+    std::cout << "DebugInfo from '" << node << "' at line " << currentToken.getLine() << 
+                 ". Type: " << currentToken.getType() << ", Value: " << currentToken.getValue() << std:: endl;
+    }
+}
+
+bool Parser::consumeToken(){
+    if(lexer.getNextToken(currentToken) == false){
+        std::cout << "Cannot read next token. Error @line: " << currentToken.getLine() << 
+        std::endl << "Last token was: " << currentToken.getValue() << 
+        std::endl ;
+        return false;
+    }
+    return true;
+}
+
 /* PackageClause */
 TreeNode* Parser::parsePackageClause(){
 
-    /* TODO: what can be expected as a return value from getValue() and getType() */
+    if(currentToken.getType() == "KEYWORD" && currentToken.getValue() == "package") {
+        debugmsg("parsePackageClause");
 
-    if(currentToken.getValue() == "package") {
-        // open parsePackageName
+        if(consumeToken() == false) //consume 'package'
+            return nullptr; 
+
+        return new PackageClauseNode( parsePackageName() );
     }
 
-    std::cout << "Error at PackageClause at line " << currentToken.getLine() << std::endl;
-    return nullptr; //just to keep warning-messages away
+    errormsg("KEYWORD", "package");
+    return nullptr; 
 }
 TreeNode* Parser::parsePackageName(){
-    return nullptr; //just to keep warning-messages away
+
+    if(currentToken.getType() == "IDENTIFIER" && currentToken.getValue() == "main"){
+        debugmsg("parsePackageName");
+        return new PackageNameNode( parseIdentifier() );
+    }
+
+    errormsg("IDENTIFIER", "main");
+    return nullptr; 
 }
 TreeNode* Parser::parseIdentifier(){
-    return nullptr; //just to keep warning-messages away
+
+    if(currentToken.getType() == "IDENTIFIER"){
+        debugmsg("parseIdentifier");
+        return new IdentifierNode( currentToken.getValue() );
+    }
+
+    errormsg("IDENTIFIER", "[some string]");
+    return nullptr; 
 }
 
 /* Import declarations */
