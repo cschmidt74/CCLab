@@ -18,15 +18,13 @@
 - package
 - unicode_digit
 - unicode_letter
+- string
   
 ### grammar
 ```
 PackageClause -> package PackageName  
 PackageName -> Identifier  
-
-Identifier -> Letter IdenCont 
-IdenCont -> Letter IdenCont | unicode_digit IdentCont | epsilon  
-Letter -> unicode_letter | "_"  
+Identifier -> string  
 ```  
 
 ## Import declarations
