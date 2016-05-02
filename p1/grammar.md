@@ -16,17 +16,13 @@
   
 ### tokens
 - package
-- unicode_digit
-- unicode_letter
+- string
   
 ### grammar
 ```
 PackageClause -> package PackageName  
-PackageName -> Identifier  
-
-Identifier -> Letter IdenCont 
-IdenCont -> Letter IdenCont | unicode_digit IdentCont | epsilon  
-Letter -> unicode_letter | "_"  
+PackageName -> Identifier   /* consciously kept redundance, in case PackageName has special errorchecking or the like*/
+Identifier -> string  
 ```  
 
 ## Import declarations
