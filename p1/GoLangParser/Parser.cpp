@@ -11,6 +11,20 @@
  * Created on 28. April 2016, 17:49
  */
 
+
+
+/*
+    !!!
+
+    'FMT' SHOULD NOT BE A LITERAL, BUT AN IDENTIFIER? 
+
+    IN ANY CASE IT SHALL NOT DIFFER FROM 'MAIN'
+
+    !!!
+
+*/
+
+
 #include "Parser.h"
 
 Parser::Parser() {
@@ -48,7 +62,7 @@ void Parser::parse() {
         std::cout << "Cannot Read next Token. Are you sure, the test-file is not empty?" << std::endl;
     }
 
-    root = parsePackageClause(); // usually start at parseStartingPoint!!!!
+    root = parseStartingPoint(); // usually start at parseStartingPoint!!!!
 
 }
 
@@ -57,11 +71,11 @@ void Parser::start(std::string filepath) {
     parse();
 }
 
-void Parser::errormsg(std::string type, std::string value){
-    std::cout << "Error @PackageClause on line " << currentToken.getLine() << std::endl;
+void Parser::errormsg(std::string whoami, std::string type, std::string value){
+    std::cout << "!!! " << whoami << " threw an error on line " << currentToken.getLine() << std::endl;
 
-    std::cout << "expected '" << type                   << ": " << value                   << "'" <<
-    std::endl << "received '" << currentToken.getType() << ": " << currentToken.getValue() << "'" <<
+    std::cout << "\texpected '" << type                   << ": " << value                   << "'" <<
+    std::endl << "\treceived '" << currentToken.getType() << ": " << currentToken.getValue() << "'" <<
     std::endl ;
 }
 
@@ -100,33 +114,67 @@ TreeNode* Parser::parsePackageClause(){
         return new PackageClauseNode( parsePackageName() );
     }
 
-    errormsg("KEYWORD", "package");
+    errormsg("parsePackageClause", "KEYWORD", "package");
     return nullptr; 
 }
 TreeNode* Parser::parsePackageName(){
 
-    if(currentToken.getType() == "IDENTIFIER" && currentToken.getValue() == "main"){
+    if(currentToken.getType() == "IDENTIFIER" && currentToken.getValue() == "main"){ //cheap hack to catch main
         debugmsg("parsePackageName");
         return new PackageNameNode( parseIdentifier() );
     }
 
-    errormsg("IDENTIFIER", "main");
-    return nullptr; 
-}
-TreeNode* Parser::parseIdentifier(){
-
-    if(currentToken.getType() == "IDENTIFIER"){
-        debugmsg("parseIdentifier");
-        return new IdentifierNode( currentToken.getValue() );
+    if(currentToken.getType() == "LITERAL" && currentToken.getValue() == "\"fmt\""){ //cheap hack to catch fmt
+        debugmsg("parsePackageName");
+        return new PackageNameNode( parseIdentifier() );
     }
 
-    errormsg("IDENTIFIER", "[some string]");
+    errormsg("parsePackageName", "IDENTIFIER|LITERAL", "main|fmt");
+    return nullptr; 
+}
+
+TreeNode* Parser::parseIdentifier(){ 
+
+    if(currentToken.getType() == "IDENTIFIER"){ //would this build a symbol table?
+        debugmsg("parseIdentifier");
+        
+        std::string identifierValue = currentToken.getValue(); //temporarily get Value for IdentifierNode
+
+        if(consumeToken() == false) //consume identifier
+            return nullptr;
+
+        return new IdentifierNode( identifierValue );
+    }
+
+    if(currentToken.getType() == "LITERAL"){
+        debugmsg("parseIdentifier");
+
+        std::string literalValue = currentToken.getValue(); //temporarily get Value for IdentifierNode
+
+        if(consumeToken() == false) //consume literal
+            return nullptr;
+
+        return new IdentifierNode( literalValue );
+    }
+
+    errormsg("parseIdentifier", "IDENTIFIER", "[some string]");
     return nullptr; 
 }
 
 /* Import declarations */
 TreeNode* Parser::parseImportDecl(){   
-    return nullptr; //just to keep warning-messages away
+
+    if(currentToken.getType() == "KEYWORD" && currentToken.getValue() == "import"){
+        debugmsg("parseImportDecl");
+
+        if(consumeToken() == false) //consume 'import'
+            return nullptr;
+
+        return new ImportDeclNode( parsePackageName() );
+    }
+
+    errormsg("parseImportDecl", "KEYWORD", "import");
+    return nullptr; 
 }
 TreeNode* Parser::parseImportDeclCont(){
     return nullptr; //just to keep warning-messages away

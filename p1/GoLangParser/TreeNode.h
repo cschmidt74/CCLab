@@ -1,7 +1,7 @@
 #include <string>
 
 enum nodeType{
-    nt_startingPoint, nt_packageClause, nt_packageName, nt_identifier
+    nt_startingPoint, nt_packageClause, nt_packageName, nt_identifier, nt_importdecl
 };
 
 class TreeNode{
@@ -70,6 +70,20 @@ private:
 };
 
 /* Import declarations */
+class ImportDeclNode : public TreeNode{
+public:
+	ImportDeclNode(TreeNode* _packageName)
+	: packageName(_packageName), keyword("import"){}
+
+	virtual nodeType getNodeType(){ return nt_importdecl; }
+
+	TreeNode* getPackageName(){ return packageName; }
+	std::string getKeyword(){ return keyword; }
+
+private:
+	TreeNode* packageName;
+	std::string keyword;
+};
 
 /* Function declarations */
 

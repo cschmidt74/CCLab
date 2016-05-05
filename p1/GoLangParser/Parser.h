@@ -32,7 +32,7 @@ private:
     bool DEBUG;
 
 	bool consumeToken();
-    void errormsg(std::string type, std::string value);
+    void errormsg(std::string whoami, std::string type, std::string value);
     void debugmsg(std::string node);
 
     /* StartingPoint */
