@@ -30,7 +30,7 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
   
 ### grammar
 ```
-PackageClause -> package PackageName ";"
+PackageClause -> package PackageName ";" /* for now semicolons are ignored */
 PackageName -> Identifier   /* consciously kept redundance, in case PackageName has special errorchecking or the like*/
 Identifier -> string  
 ```  
@@ -43,7 +43,7 @@ Identifier -> string
   
 ### grammar
 ```
-ImportDecl -> import PackageName ";"
+ImportDecl -> import PackageName ";" /* for now semicolons are ignored */
 /* PackageName: see #PackageClause */
 ```
 ## Function declarations
