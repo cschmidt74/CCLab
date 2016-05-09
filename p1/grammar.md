@@ -9,7 +9,7 @@
 ## Syntax
 - CamelCase: Non-Terminals
 - lowsercase: terminals / tokens
-- epsilon: epsilon
+- epsilon: e
 - "quotation mark": char / string
 
 ## StartingPoint
@@ -24,11 +24,12 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
   
 ### terminals / tokens
 - package
+- ;
 - Identifier (string): `(letter|"_")(letter|number|"_")*`
   
 ### grammar
 ```
-PackageClause -> package PackageName ";" /* for now semicolons are ignored */
+PackageClause -> package PackageName ";" 
 PackageName -> Identifier /* consciously keeping redundance, for special checks later on */
 Identifier -> string  
 ```  
@@ -38,7 +39,7 @@ Identifier -> string
   
 ### terminals / tokens
 - import
-- Literal (string): `"""(ascii-alphabet)*"""`
+- Literal (string): `"""(char)*"""`
   
 ### grammar
 ```
@@ -51,6 +52,11 @@ Literal -> string
   
 ### terminals / tokens
 - func
+- (
+- )
+- {
+- }
+- e
 
 ### grammar
 ```
@@ -60,11 +66,15 @@ Function -> Signature FunctionBody
 Signature -> "(" ")"                         /* for now */
 FunctionBody -> Block
 Block -> "{" StatementList "}"
-StatementList -> Statement ";" StatementList | epsilon 
+StatementList -> Statement ";" StatementList | e 
 ```
 
 ## Statements
 [Golang] (https://golang.org/ref/spec#Statement)
+
+### terminals / tokens
+- .
+- ,
 
 ### grammar
 ```
