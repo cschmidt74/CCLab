@@ -12,42 +12,55 @@ public:
     void lex(std::string filepath);
     void parse();
     void start(std::string filepath);
+
+    void printAST();
+
 private:
     Lexer lexer;
     Token currentToken;
-    TreeNode* root;
+    ast::TreeNode* root;
     bool DEBUG;
+    bool hasParsed;
 
-	bool consumeToken();
+    size_t tabCount;
+
+    void printNonTerminal(ast::NonTerminalNode* nrNode);
+    void printTerminal(ast::TerminalNode* ntNode);
+    void printLiteral(ast::LiteralNode* nlNode);
+    std::string nttos(ast::nodeType nt);
+    std::string dttos(ast::dataType dt);
+
+	bool consumeToken(bool suppress_errormsg = false);
     void errormsg(std::string whoami, std::string type, std::string value);
     void debugmsg(std::string node);
 
+    size_t timeout;
+
     /* StartingPoint */
-    TreeNode* parseStartingPoint();
+    ast::TreeNode* parseStartingPoint();
     /* PackageClause */
-    TreeNode* parsePackageClause();
-    TreeNode* parsePackageName();
-    TreeNode* parseIdentifier();
+    ast::TreeNode* parsePackageClause();
+    ast::TreeNode* parsePackageName();
+    ast::TreeNode* parseIdentifier();
     /* Import declarations */
-    TreeNode* parseImportDecl();
-    TreeNode* parseImportPackageName();
-    TreeNode* parseLiteral();
+    ast::TreeNode* parseImportDecl();
+    ast::TreeNode* parseImportPackageName();
+    ast::TreeNode* parseLiteral();
     /* Function declarations */
-    TreeNode* parseFunctionDecl();
-    TreeNode* parseFunctionName();
-    TreeNode* parseFunction();
-    TreeNode* parseSignature();
-    TreeNode* parseFunctionBody();
-    TreeNode* parseBlock();
-    TreeNode* parseStatementList();
+    ast::TreeNode* parseFunctionDecl();
+    ast::TreeNode* parseFunctionName();
+    ast::TreeNode* parseFunction();
+    ast::TreeNode* parseSignature();
+    ast::TreeNode* parseFunctionBody();
+    ast::TreeNode* parseBlock();
+    ast::TreeNode* parseStatementList();
     /* Statements */
-    TreeNode* parseStatement();
-    TreeNode* parseSimpleStmt();
-    TreeNode* parseEmptyStmt();
-    TreeNode* parseDeclaration();
-    TreeNode* parseReturnStmt();
-    TreeNode* parseExpressionStmt();
-    TreeNode* parseAssignment();
+    ast::TreeNode* parseStatement();
+    ast::TreeNode* parseFunctionCall();
+    ast::TreeNode* parseFunctionCallCont();
+    ast::TreeNode* parseArguments();
+    ast::TreeNode* parseArgumentsCont();
+    ast::TreeNode* parseArgument();
 };
 
 #endif /* PARSER_H */

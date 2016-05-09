@@ -23,6 +23,7 @@ int main(void) {
    
    	Parser p;
     p.start("/vagrant/sourcecode.txt");
+    p.printAST();
 
     /*
     if(argc == 2) {

@@ -246,6 +246,6 @@ bool Lexer::isLetterOrNumber(char c) {
  * Checks if a character is a bracket
  */
 bool Lexer::isBracket(char c) {
-    if (c == '[' || c == ']' || c == '(' || c == ')' || c == '{' || c == '}') return true;
+    if (c == '[' || c == ']' || c == '(' || c == ')' || c == '{' || c == '}' || c == ';' || c == '.') return true;
     else return false;
 }

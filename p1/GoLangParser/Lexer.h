@@ -50,6 +50,8 @@ private:
     std::vector<std::string> keywords;
     std::vector<Token> tokens;
     size_t tokenCount;
+
+    bool DEBUG;
 };
 
 #endif /* LEXER_H */
