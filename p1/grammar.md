@@ -59,7 +59,7 @@ Literal -> string
 FunctionDecl -> func FunctionName Function
 FunctionName -> Identifier
 Function -> Signature FunctionBody
-Signature -> "()"                         /* for now */
+Signature -> "(" ")"                         /* for now */
 FunctionBody -> Block
 Block -> "{" StatementList "}"
 StatementList -> Statement ";" StatementList | epsilon 
