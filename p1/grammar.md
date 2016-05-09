@@ -9,7 +9,7 @@
 ## Syntax
 - CamelCase: Non-Terminals
 - lowsercase: terminals / tokens
-- epsilon: e
+- epsilon: €
 - "quotation mark": char / string
 
 ## StartingPoint
@@ -30,7 +30,7 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
 ### grammar
 ```
 PackageClause -> package PackageName ";" 
-PackageName -> Identifier /* consciously keeping redundance, for special checks later on */
+PackageName -> Identifier                 /* consciously keeping redundance, for special checks later on */
 Identifier -> string  
 ```  
 
@@ -43,8 +43,8 @@ Identifier -> string
   
 ### grammar
 ```
-ImportDecl -> import ImportPackageName ";" /* for now semicolons are ignored */
-ImportPackageName -> Literal /* consciously keeping redundance, for special checks later on */
+ImportDecl -> import ImportPackageName ";"  /* for now semicolons are ignored */
+ImportPackageName -> Literal                /* consciously keeping redundance, for special checks later on */
 Literal -> string
 ```
 ## Function declarations
@@ -56,17 +56,17 @@ Literal -> string
 - )
 - {
 - }
-- e
+- €
 
 ### grammar
 ```
 FunctionDecl -> func FunctionName Function
 FunctionName -> Identifier
 Function -> Signature FunctionBody
-Signature -> "(" ")"                         /* for now */
+Signature -> "(" ")"                              /* for now */
 FunctionBody -> Block
 Block -> "{" StatementList "}"
-StatementList -> Statement ";" StatementList | e 
+StatementList -> Statement ";" StatementList | € 
 ```
 
 ## Statements
@@ -78,10 +78,10 @@ StatementList -> Statement ";" StatementList | e
 
 ### grammar
 ```
-Statement -> FunctionCall | epsilon
+Statement -> FunctionCall | €                               /* "func main(){;;;;;;}" is valid in go */
 FunctionCall -> PackageName "." FunctionCallCont
 FunctionCallCont -> FunctionName Arguments
 Arguments -> "(" ArgumentsCont ")"
-ArgumentsCont -> Argument | Argument "," ArgumentsCont | epsilon
+ArgumentsCont -> Argument | Argument "," ArgumentsCont | €
 Argument -> Literal 
 ```
