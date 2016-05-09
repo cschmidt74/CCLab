@@ -26,7 +26,7 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
   
 ### terminals / tokens
 - package
-- Identifier (string): (letter|"_")(letter|number|"_")*
+- Identifier (string): (letter|'_')(letter|number|'_')*
   
 ### grammar
 ```
@@ -40,7 +40,7 @@ Identifier -> string
   
 ### terminals / tokens
 - import
-- Literal (string): """(ascii-alphabet)*"""
+- Literal (string): '"'(ascii-alphabet)*'"'
   
 ### grammar
 ```
