@@ -72,13 +72,10 @@ StatementList -> Statement ";" StatementList | epsilon
 
 ### grammar
 ```
-Statement -> Declaration | SimpleStmt | ReturnStmt    /* see link above for more options */
-SimpleStmt -> EmptyStmt | ExpressionStmt | Assignment 
-EmptyStmt -> epsilon                                  /* this means that "func main(){;;;;;}" is legal in GO */
-Declaration -> EmptyStmt            ______
-SimpleStmt -> EmptyStmt                   |
-ReturnStmt -> EmptyStmt                   |
-EmptyStmt -> EmptyStmt                     > waiting for implementation
-ExpressionStmt -> EmptyStmt               |
-Assignment ->EmptyStmt              ______|
+Statement -> FunctionCall | epsilon
+FunctionCall -> PackageName "." FunctionCallCont
+FunctionCallCont -> FunctionName Arguments
+Arguments -> "(" ArgumentsCont ")"
+ArgumentsCont -> Argument | Argument "," ArgumentsCont | epsilon
+Argument -> Literal 
 ```
