@@ -73,7 +73,8 @@ bool Parser::consumeToken(){
 /* StartingPoint */
 TreeNode* Parser::parseStartingPoint(){
     debugmsg("parseStartingPoint");
-    return new StartingPointNode( parsePackageClause(), parseImportDecl(), parseFunctionDecl() );
+    //StartingPoint -> PackageClause ImportDecl FunctionDecl
+    return new NonTerminalNode( parsePackageClause(), parseImportDecl(), parseFunctionDecl(), nt_startingPoint );
 }
 
 /* --------------------------------------------------------------------------------------------------------------- */
@@ -86,7 +87,13 @@ TreeNode* Parser::parsePackageClause(){
         if(consumeToken() == false) //consume 'package'
             return nullptr; 
 
-        return new PackageClauseNode( parsePackageName() );
+        //PackageClause -> package PackageName ";"
+        return new NonTerminalNode( 
+            new LiteralNode("package", dt_string, nt_keyword)
+            , parsePackageName()
+            , new LiteralNode(";", dt_char, nt_symbol)
+            , nt_packageClause 
+            );
 
         //TODO implement catching ";"
     }
@@ -99,7 +106,9 @@ TreeNode* Parser::parsePackageName(){
     if(currentToken.getType() == "IDENTIFIER"){ 
         if(currentToken.getValue() == "main"){ //cheaply catching main
             debugmsg("parsePackageName");
-            return new PackageNameNode( parseIdentifier() );
+
+            //PackageName -> Identifier
+            return new NonTerminalNode( parseIdentifier(), nullptr, nullptr, nt_packageName );
         }
     }
 
@@ -117,7 +126,9 @@ TreeNode* Parser::parseIdentifier(){
         if(consumeToken() == false) //consume identifier
             return nullptr;
 
-        return new IdentifierNode( identifierValue );
+        //Identifier -> string
+        return new TerminalNode( identifierValue, dt_string,  nt_identifier, 0); 
+        //since no symbol-table is beeing built yet, always have index of 0
     }
 
     errormsg("parseIdentifier", "IDENTIFIER", "[some string]");
@@ -134,7 +145,13 @@ TreeNode* Parser::parseImportDecl(){
         if(consumeToken() == false) //consume 'import'
             return nullptr;
 
-        return new ImportDeclNode( parseImportPackageName() );
+        //ImportDecl -> import ImportPackageName ";"
+        return new NonTerminalNode( 
+            new LiteralNode("import", dt_string, nt_keyword)
+            , parseImportPackageName()
+            , new LiteralNode(";", dt_char, nt_symbol)
+            , nt_importdecl 
+            );
 
         //TODO implement catching ";"
     }
@@ -147,7 +164,9 @@ TreeNode* Parser::parseImportPackageName(){
     if(currentToken.getType() == "LITERAL"){ 
         if(currentToken.getValue() == "\"fmt\""){ //cheaply catching "fmt"
             debugmsg("parseImportPackageName");
-            return new PackageNameNode( parseLiteral() );
+
+            //ImportPackageName -> Literal
+            return new NonTerminalNode( parseLiteral(), nullptr, nullptr, nt_ImportPackageName );
         }
     }
 
@@ -164,7 +183,7 @@ TreeNode* Parser::parseLiteral(){
         if(consumeToken() == false) //consume literal
             return nullptr;
 
-        return new LiteralNode( literalValue );
+        return new LiteralNode( literalValue, dt_string, nt_literal );
     }
 
     errormsg("parseLiteral", "LITERAL", "\"[some string]\"");

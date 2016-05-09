@@ -1,7 +1,16 @@
 #include <string>
 
 enum nodeType{
-    nt_startingPoint, nt_packageClause, nt_packageName, nt_identifier, nt_importdecl, nt_literal
+    nt_startingPoint, 
+    nt_packageClause, nt_packageName, nt_identifier, 
+    nt_importdecl, nt_ImportPackageName, nt_literal/* anything that is encased in "" */, 
+    nt_functionDecl, nt_functionName, nt_function, nt_signature, nt_functionBody,
+    nt_keyword /* import, package, ... */, 
+    nt_symbol /* ;, (, ), {, }, ... */
+};
+
+enum dataType{
+	dt_string, dt_char, dt_int, dt_float
 };
 
 class TreeNode{
@@ -10,95 +19,50 @@ public:
     virtual nodeType getNodeType() = 0;
 };
 
-/* StartinPoint */
-class StartingPointNode : public TreeNode{
+class NonTerminalNode : public TreeNode{
 public:
-	StartingPointNode(TreeNode* _packageclause, TreeNode* _importdecl, TreeNode* _functiondecl)
-	: packageclause(_packageclause), importdecl(_importdecl), functiondecl(_functiondecl){}
+	NonTerminalNode(TreeNode* _left, TreeNode* _middle, TreeNode* _right, nodeType _nType)
+	: left(_left), middle(_middle), right(_right), nType(_nType){}
 
-	virtual nodeType getNodeType(){ return nt_startingPoint; }
+	virtual nodeType getNodeType(){ return nType; }
 
-	TreeNode* getPackageClause(){ return packageclause; }
-	TreeNode* getImportdecl(){ return importdecl; }
-	TreeNode* getFunctiondecl(){ return functiondecl; }
+	TreeNode* getLeftChild(){ return left; }
+	TreeNode* getMiddleChild(){ return middle; }
+	TreeNode* getRightChild(){ return right; }
 private:
-	TreeNode* packageclause;
-	TreeNode* importdecl;
-	TreeNode* functiondecl;
+	TreeNode* left;
+	TreeNode* middle;
+	TreeNode* right;
+	nodeType nType;
 };
 
-/* PackageClause */
-class PackageClauseNode : public TreeNode{
+class TerminalNode : public TreeNode{
 public:
-	PackageClauseNode(TreeNode* _packageName)
-	: packageName(_packageName), keyword("package") {}
+	TerminalNode(std::string _name, dataType _dType, nodeType _nType, size_t _symbolTable_index)
+	: name(_name), dType(_dType), nType(_nType), symbolTable_index(_symbolTable_index){}
 
-	virtual nodeType getNodeType(){ return nt_packageClause; }
+	virtual nodeType getNodeType(){ return nType; }
 
-	TreeNode* getPackageName(){ return packageName; }
-	std::string getKeyword(){return keyword; }
-
+	std::string getName(){ return name; }
+	dataType getDatatType(){ return dType; }
 private:
-	TreeNode* packageName;
-	std::string keyword;
-};
-
-class PackageNameNode : public TreeNode{
-public:
-	PackageNameNode(TreeNode* _identifier)
-	: identifier(_identifier){}
-
-	virtual nodeType getNodeType(){ return nt_packageName; }
-
-	TreeNode* getIdentifier(){ return identifier; }
-
-private:
-	TreeNode* identifier;
-};
-
-class IdentifierNode : public TreeNode{
-public:
-	IdentifierNode(std::string _identifier)
-	: identifier(_identifier) {}
-
-	//The Symboltable is built using identifiers?
-	virtual nodeType getNodeType(){ return nt_identifier; }
-
-	std::string getIdentifier(){ return identifier; }
-
-private:
-	std::string identifier;
-};
-
-/* Import declarations */
-class ImportDeclNode : public TreeNode{
-public:
-	ImportDeclNode(TreeNode* _packageName)
-	: packageName(_packageName), keyword("import"){}
-
-	virtual nodeType getNodeType(){ return nt_importdecl; }
-
-	TreeNode* getPackageName(){ return packageName; }
-	std::string getKeyword(){ return keyword; }
-
-private:
-	TreeNode* packageName;
-	std::string keyword;
+	std::string name;
+	dataType dType;	
+	nodeType nType;	
+	size_t symbolTable_index; //needed??????
 };
 
 class LiteralNode : public TreeNode{
 public:
-	LiteralNode(std::string _literal)
-	: literal(_literal) {}
+	LiteralNode(std::string _value, dataType _dType, nodeType _nType)
+	:value(_value), dType(_dType), nType(_nType){}
 
-	virtual nodeType getNodeType(){ return nt_literal; }
+	virtual nodeType getNodeType(){ return nType; }
 
-	std::string getLiteral(){ return literal; }
-
+	std::string getValue(){ return value; }
+	dataType getDatatType(){ return dType; }
 private:
-	std::string literal;
+	std::string value;	
+	dataType dType;
+	nodeType nType;
 };
-
-/* Function declarations */
-
-/* Statements */
