@@ -31,8 +31,9 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
 ### grammar
 ```
 PackageClause -> package PackageName ";" /* for now semicolons are ignored */
-PackageName -> Identifier   /* consciously kept redundance, in case PackageName has special errorchecking or the like*/
+PackageName -> Identifier | Literal
 Identifier -> string  
+Literal -> string
 ```  
 
 ## Import declarations
