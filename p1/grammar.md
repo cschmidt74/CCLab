@@ -14,7 +14,7 @@
 
 ## StartingPoint
 
-## tokens
+## terminals / tokens
 
 ## grammar
 ```
@@ -24,9 +24,9 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
 ## PackageClause
 [Golang](https://golang.org/ref/spec#PackageClause)
   
-### tokens
+### terminals / tokens
 - package
-- string
+- Identifier (string): (letter|"_")(letter|number|"_")*
   
 ### grammar
 ```
@@ -38,8 +38,9 @@ Identifier -> string
 ## Import declarations
 [Golang](https://golang.org/ref/spec#ImportDecl)
   
-### tokens
+### terminals / tokens
 - import
+- Literal (string): """(ascii-alphabet)*"""
   
 ### grammar
 ```
@@ -50,7 +51,7 @@ Literal -> string
 ## Function declarations
 [Golang](https://golang.org/ref/spec#Function_declarations)
   
-### tokens
+### terminals / tokens
 - func
 
 ### grammar
@@ -67,7 +68,7 @@ StatementList -> Statement ";" StatementList | epsilon
 ## Statements
 [Golang] (https://golang.org/ref/spec#Statement)
   
-### tokens
+### terminals / tokens
 
 ### grammar
 ```
