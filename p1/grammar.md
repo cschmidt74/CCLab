@@ -30,8 +30,8 @@ StartingPoint -> PackageClause ImportDecl FunctionDecl
   
 ### grammar
 ```
-PackageClause -> package PackageName ";"
-PackageName -> Identifier   /* consciously kept redundance, in case PackageName has special errorchecking or the like*/
+PackageClause -> package PackageName ";" /* for now semicolons are ignored */
+PackageName -> Identifier /* consciously keeping redundance, for special checks later on */
 Identifier -> string  
 ```  
 
@@ -43,8 +43,9 @@ Identifier -> string
   
 ### grammar
 ```
-ImportDecl -> import PackageName ";"
-/* PackageName: see #PackageClause */
+ImportDecl -> import ImportPackageName ";" /* for now semicolons are ignored */
+ImportPackageName -> Literal /* consciously keeping redundance, for special checks later on */
+Literal -> string
 ```
 ## Function declarations
 [Golang](https://golang.org/ref/spec#Function_declarations)
