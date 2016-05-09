@@ -1,7 +1,7 @@
 #include <string>
 
 enum nodeType{
-    nt_startingPoint, nt_packageClause, nt_packageName, nt_identifier, nt_importdecl
+    nt_startingPoint, nt_packageClause, nt_packageName, nt_identifier, nt_importdecl, nt_literal
 };
 
 class TreeNode{
@@ -61,6 +61,7 @@ public:
 	IdentifierNode(std::string _identifier)
 	: identifier(_identifier) {}
 
+	//The Symboltable is built using identifiers?
 	virtual nodeType getNodeType(){ return nt_identifier; }
 
 	std::string getIdentifier(){ return identifier; }
@@ -83,6 +84,19 @@ public:
 private:
 	TreeNode* packageName;
 	std::string keyword;
+};
+
+class LiteralNode : public TreeNode{
+public:
+	LiteralNode(std::string _literal)
+	: literal(_literal) {}
+
+	virtual nodeType getNodeType(){ return nt_literal; }
+
+	std::string getLiteral(){ return literal; }
+
+private:
+	std::string literal;
 };
 
 /* Function declarations */

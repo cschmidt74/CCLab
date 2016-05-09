@@ -1,30 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Parser.cpp
- * Author: Luqzn
- * 
- * Created on 28. April 2016, 17:49
- */
-
-
-
-/*
-    !!!
-
-    'FMT' SHOULD NOT BE A LITERAL, BUT AN IDENTIFIER? 
-
-    IN ANY CASE IT SHALL NOT DIFFER FROM 'MAIN'
-
-    !!!
-
-*/
-
-
 #include "Parser.h"
 
 Parser::Parser() {
@@ -96,12 +69,14 @@ bool Parser::consumeToken(){
     return true;
 }
 
+/* --------------------------------------------------------------------------------------------------------------- */
 /* StartingPoint */
 TreeNode* Parser::parseStartingPoint(){
     debugmsg("parseStartingPoint");
     return new StartingPointNode( parsePackageClause(), parseImportDecl(), parseFunctionDecl() );
 }
 
+/* --------------------------------------------------------------------------------------------------------------- */
 /* PackageClause */
 TreeNode* Parser::parsePackageClause(){
 
@@ -112,6 +87,8 @@ TreeNode* Parser::parsePackageClause(){
             return nullptr; 
 
         return new PackageClauseNode( parsePackageName() );
+
+        //TODO implement catching ";"
     }
 
     errormsg("parsePackageClause", "KEYWORD", "package");
@@ -119,17 +96,14 @@ TreeNode* Parser::parsePackageClause(){
 }
 TreeNode* Parser::parsePackageName(){
 
-    if(currentToken.getType() == "IDENTIFIER" && currentToken.getValue() == "main"){ //cheap hack to catch main
-        debugmsg("parsePackageName");
-        return new PackageNameNode( parseIdentifier() );
+    if(currentToken.getType() == "IDENTIFIER"){ 
+        if(currentToken.getValue() == "main"){ //cheaply catching main
+            debugmsg("parsePackageName");
+            return new PackageNameNode( parseIdentifier() );
+        }
     }
 
-    if(currentToken.getType() == "LITERAL" && currentToken.getValue() == "\"fmt\""){ //cheap hack to catch fmt
-        debugmsg("parsePackageName");
-        return new PackageNameNode( parseIdentifier() );
-    }
-
-    errormsg("parsePackageName", "IDENTIFIER|LITERAL", "main|fmt");
+    errormsg("parsePackageName", "IDENTIFIER", "main");
     return nullptr; 
 }
 
@@ -146,21 +120,11 @@ TreeNode* Parser::parseIdentifier(){
         return new IdentifierNode( identifierValue );
     }
 
-    if(currentToken.getType() == "LITERAL"){
-        debugmsg("parseIdentifier");
-
-        std::string literalValue = currentToken.getValue(); //temporarily get Value for IdentifierNode
-
-        if(consumeToken() == false) //consume literal
-            return nullptr;
-
-        return new IdentifierNode( literalValue );
-    }
-
     errormsg("parseIdentifier", "IDENTIFIER", "[some string]");
     return nullptr; 
 }
 
+/* --------------------------------------------------------------------------------------------------------------- */
 /* Import declarations */
 TreeNode* Parser::parseImportDecl(){   
 
@@ -170,16 +134,44 @@ TreeNode* Parser::parseImportDecl(){
         if(consumeToken() == false) //consume 'import'
             return nullptr;
 
-        return new ImportDeclNode( parsePackageName() );
+        return new ImportDeclNode( parseImportPackageName() );
+
+        //TODO implement catching ";"
     }
 
     errormsg("parseImportDecl", "KEYWORD", "import");
     return nullptr; 
 }
-TreeNode* Parser::parseImportDeclCont(){
+TreeNode* Parser::parseImportPackageName(){
+
+    if(currentToken.getType() == "LITERAL"){ 
+        if(currentToken.getValue() == "\"fmt\""){ //cheaply catching "fmt"
+            debugmsg("parseImportPackageName");
+            return new PackageNameNode( parseLiteral() );
+        }
+    }
+
+    errormsg("parseImportPackageName", "LITERAL", "\"fmt\"");
     return nullptr; //just to keep warning-messages away
 }
 
+TreeNode* Parser::parseLiteral(){
+    if(currentToken.getType() == "LITERAL"){
+        debugmsg("parseLiteral");
+
+        std::string literalValue = currentToken.getValue(); //temporarily get Value for IdentifierNode
+
+        if(consumeToken() == false) //consume literal
+            return nullptr;
+
+        return new LiteralNode( literalValue );
+    }
+
+    errormsg("parseLiteral", "LITERAL", "\"[some string]\"");
+    return nullptr;
+}
+
+/* --------------------------------------------------------------------------------------------------------------- */
 /* Function declarations */
 TreeNode* Parser::parseFunctionDecl(){
     return nullptr; //just to keep warning-messages away
@@ -203,6 +195,7 @@ TreeNode* Parser::parseStatementList(){
     return nullptr; //just to keep warning-messages away
 }
 
+/* --------------------------------------------------------------------------------------------------------------- */
 /* Statements */
 TreeNode* Parser::parseStatement(){
     return nullptr; //just to keep warning-messages away
