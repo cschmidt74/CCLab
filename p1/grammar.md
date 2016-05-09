@@ -14,8 +14,6 @@
 
 ## StartingPoint
 
-## terminals / tokens
-
 ## grammar
 ```
 StartingPoint -> PackageClause ImportDecl FunctionDecl
@@ -67,8 +65,6 @@ StatementList -> Statement ";" StatementList | epsilon
 
 ## Statements
 [Golang] (https://golang.org/ref/spec#Statement)
-  
-### terminals / tokens
 
 ### grammar
 ```
