@@ -3,6 +3,7 @@
 
 #include "Lexer.h"
 #include "TreeNode.h"
+#include <vector>
 
 class Parser {
 public:
@@ -23,6 +24,8 @@ private:
     bool hasParsed;
 
     size_t tabCount;
+
+    std::vector<char> cellar;
 
     void printNonTerminal(ast::NonTerminalNode* nrNode);
     void printTerminal(ast::TerminalNode* ntNode);

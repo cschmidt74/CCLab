@@ -5,6 +5,7 @@ Parser::Parser() {
     timeout = 0;
     tabCount = 0;
     hasParsed = false;
+    cellar.erase(cellar.begin(), cellar.end());
 }
 
 Parser::~Parser() {
@@ -399,23 +400,30 @@ ast::TreeNode* Parser::parseFunctionBody(){
     //FunctionBody -> Block
     return new ast::NonTerminalNode(parseBlock(), nullptr, nullptr, ast::nt_functionBody);
 }
+
 ast::TreeNode* Parser::parseBlock(){
 
     if(currentToken.getType() == "BRACKET" && currentToken.getValue() == "{"){
         debugmsg("parseBlock");
 
+        cellar.push_back('{'); //construct pushdown-machine
+
         if(consumeToken(true) == false) //consume '{' 
             return nullptr;
 
-        ast::TreeNode* statementlist = parseStatementList(); //will consume any statements till following '}'
+        ast::TreeNode* statementlist = parseStatementList(); //will consume any statements up to following '}'
 
         if(currentToken.getType() == "BRACKET" && currentToken.getValue() == "}"){
             debugmsg("parseBlock");
 
-            /*
-            if(consumeToken(true) == false) //consume '}'
-                return nullptr; //also suppress errormsg "can't read next token", because that is EOF
-            */
+            if(cellar.back() == '{'){ //only deconstruct, when found partner-symbol
+                cellar.pop_back(); //deconstruct pushdown-machine
+            }
+
+            if(cellar.empty() == false){ //in which case we are not at EOF
+                if(consumeToken() == false) //so we can keep looking, and consume }
+                    return nullptr;
+            }
 
             //Block -> "{" StatementList "}"
             return new ast::NonTerminalNode(
