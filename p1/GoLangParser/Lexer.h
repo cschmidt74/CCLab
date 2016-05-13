@@ -33,13 +33,16 @@ public:
     
     int createTokens();
     bool splitLine(std::string line, int lineNumber);
+    bool checkForSemicolonOnLineEnd(Token t);
     void printTokens();
     bool getNextToken(Token& t);
     void resetTokenCount();
     
     void initKeywords();
     bool isKeyword(std::string word);
-    
+    bool isSimpleOperator(char c);
+    void initOperators();
+    bool isOperator(std::string word);
     bool isSpace(char c);
     bool isLetter(char c);
     bool isNumber(char c);
@@ -48,10 +51,9 @@ public:
 private:
     std::vector<std::string> lines;
     std::vector<std::string> keywords;
+    std::vector<std::string> operators;
     std::vector<Token> tokens;
-    size_t tokenCount;
-
-    bool DEBUG;
+    int tokenCount;
 };
 
 #endif /* LEXER_H */
