@@ -106,8 +106,10 @@ bool Lexer::splitLine(std::string line, int lineNumber) {
 
         // handle semicolon
         if (currentChar == ';') {
+            currentChar = ' ';
             Token t("TERMINATOR", ";", lineNumber);
             tokens.push_back(t);
+			if(data.empty()) return true;
         }
 
         // handle comments

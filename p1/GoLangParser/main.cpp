@@ -12,25 +12,49 @@
  */
 
 #include <cstdlib>
-#include <iostream>
+
 #include "Parser.h"
+
+#define test true
 
 /*
  * Main function
- * int argc, char** argv
  */
-int main(void) {
-   
-   	Parser p;
-    p.start("/vagrant/sourcecode.txt");
-    p.printAST();
-
-    /*
-    if(argc == 2) {
+int main(int argc, char** argv) {
+    
+    std::string pathCases = "D:\\CompilerConstruction\\testcases\\";
+    if(test) {
+        struct testcase {
+            std::string file;
+            int result;
+        };
+            
+        testcase tc;
+        std::vector<testcase> testcases;
+        
+        tc.file="valid\\valid_1";
+        tc.result = 0;
+        testcases.push_back(tc);
+        
+        tc.file="invalid\\invalid_comment.txt";
+        tc.result = 3;
+        testcases.push_back(tc);
+                
+        tc.file="invalid\\invalid_literal.txt";
+        tc.result = 9;
+        testcases.push_back(tc);
+        
+        
+        for(int i = 1; i<=testcases.size(); i++) {
+            Parser p;
+            p.start(pathCases+testcases[i].file);
+            std::cout << "Result should be " << testcases[i].result << " and was " << "TODO: RETVAL" << std::endl;
+        }
+        
+        
+    } else if(argc == 2) {
         Parser p;
-        //p.start(argv[1]);
-        p.start("/vagrant/sourcecode.txt");
+        p.start(argv[1]);
     }
-    */
     return 0;
 }
