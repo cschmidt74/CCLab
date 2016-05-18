@@ -66,8 +66,8 @@ bool Parser::start(std::string filepath) {
         printAST();
     }
 
-    if(errorLine)
-        return true;
+    if(errorLine || errorCount)
+        return true; //true means error found
     return false;
 }
 
