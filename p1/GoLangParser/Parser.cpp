@@ -105,14 +105,14 @@ void Parser::printNonTerminal(ast::NonTerminalNode* nrNode){
         for (size_t i = 0; i < tabCount; ++i)
             cout << "\t";
 
-            if(child->getNodeType() < 100) //another NonTerminal
-                printNonTerminal( (NonTerminalNode*) child);
+        if(child->getNodeType() < 100) //another NonTerminal
+            printNonTerminal( (NonTerminalNode*) child);
 
-            else if(child->getNodeType() < 200) //terminal
-                printTerminal( (TerminalNode*) child);
+        else if(child->getNodeType() < 200) //terminal
+            printTerminal( (TerminalNode*) child);
 
-            else //literal
-                printLiteral( (LiteralNode*) child);
+        else //literal
+            printLiteral( (LiteralNode*) child);
         } //else
 
     } //for
@@ -222,7 +222,7 @@ ast::TreeNode* Parser::parsePackageClause(){
 
         ast::TreeNode* pkg_name = parsePackageName(); //will consume package name, leaving a semicolon
 
-        if(currentToken.getValue() == ";"){
+        if(currentToken.getType() == "TERMINATOR" && currentToken.getValue() == ";"){
             debugmsg("parsePackageClause");
 
             if(consumeToken() == false) //consume ;
@@ -237,7 +237,7 @@ ast::TreeNode* Parser::parsePackageClause(){
                 );
         }
 
-        errormsg("parsePackageClause", "Some Symbol", ";");
+        errormsg("parsePackageClause", "TERMINATOR", ";");
     }
 
     errormsg("parsePackageClause", "KEYWORD", "package");
@@ -291,7 +291,7 @@ ast::TreeNode* Parser::parseImportDecl(){
 
         ast::TreeNode* imp_pcknm = parseImportPackageName(); //will consume ImportPackageName, leaving ;
 
-        if(currentToken.getValue() == ";"){
+        if(currentToken.getType() == "TERMINATOR" && currentToken.getValue() == ";"){
             debugmsg("parseImportDecl");
 
             if(consumeToken() == false) //consume ;
@@ -305,7 +305,7 @@ ast::TreeNode* Parser::parseImportDecl(){
                 );
         }
 
-        errormsg("parseImportDecl", "Some Symbol", ";");
+        errormsg("parseImportDecl", "TERMINATOR", ";");
 
     }
 
@@ -477,11 +477,11 @@ ast::TreeNode* Parser::parseStatementList(){
 
     ast::TreeNode* statement = parseStatement(); //will consume the statement, leaving a semicolon
 
-    if(currentToken.getValue() == ";"){
+    if(currentToken.getType() == "TERMINATOR" && currentToken.getValue() == ";"){
         if(consumeToken() == false) //consume ;
             return nullptr;
     } else {
-        errormsg("parseStatementList", "Some Symbol", ";");
+        errormsg("parseStatementList", "TERMINATOR", ";");
         return nullptr;
     }
 
@@ -513,11 +513,11 @@ ast::TreeNode* Parser::parseFunctionCall(){
 
     ast::TreeNode* pcknm = parsePackageName(); //will consume packagename
 
-    if(currentToken.getValue() == "."){ 
+    if(currentToken.getType() == "FUNCTIONCALL" && currentToken.getValue() == "."){ 
         if(consumeToken() == false) //consume .
             return nullptr;
     } else {
-        errormsg("parseFunctionCall", "Some Symbol", ".");
+        errormsg("parseFunctionCall", "FUNCTIONCALL", ".");
         return nullptr;
     }
 
