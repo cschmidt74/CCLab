@@ -1,11 +1,13 @@
 #include "Parser.h"
 
 Parser::Parser() {
-    DEBUG = true;
+    DEBUG = false;
     timeout = 0;
     tabCount = 0;
     hasParsed = false;
     cellar.erase(cellar.begin(), cellar.end());
+    errorCount = 0;
+    errorLine = 0;
 }
 
 Parser::~Parser() {
@@ -22,10 +24,13 @@ void Parser::lex(std::string filepath) {
     }
 
     int failed = lexer.createTokens();
-    if (failed) std::cout << "Lexing failed on line " << failed << "." << std::endl;
+    if (failed) {
+        std::cout << "Lexing failed on line " << failed << "." << std::endl;
+        errorLine = failed;
+    }
     else {
-        std::cout << "Lexing succeeded." << std::endl;
         if(DEBUG){
+            std::cout << "Lexing succeeded." << std::endl;
             std::cout << "Tokens:" << std::endl;
             lexer.printTokens();
         }
@@ -40,20 +45,30 @@ void Parser::parse() {
         std::cout << "starting parser ..." << std::endl;
 
     if(lexer.getNextToken(currentToken) == false){
-        std::cout << "Cannot Read next Token. Are you sure, the test-file is not empty?" << std::endl;
+        std::cout << "Either an error has occured or the file is empty." << std::endl;
     }
 
     root = parseStartingPoint(); 
 
     if (root != nullptr && root->getNodeType() == ast::nt_startingPoint){
         hasParsed = true;
-        std::cout << "Parsing succeeded." << std::endl;
+        if(DEBUG)
+            std::cout << "Parsing succeeded." << std::endl;
     }
+
 }
 
-void Parser::start(std::string filepath) {
+bool Parser::start(std::string filepath) {
     lex(filepath);
     parse();
+
+    if(DEBUG && hasParsed){
+        printAST();
+    }
+
+    if(errorLine)
+        return true;
+    return false;
 }
 
 void Parser::printAST(){
@@ -163,6 +178,7 @@ void Parser::errormsg(std::string whoami, std::string type, std::string value){
     std::cout << "\texpected '" << type                   << ": " << value                   << "'" <<
     std::endl << "\treceived '" << currentToken.getType() << ": " << currentToken.getValue() << "'" <<
     std::endl ;
+    ++errorCount;
 }
 
 void Parser::debugmsg(std::string node){

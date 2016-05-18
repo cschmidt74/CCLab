@@ -12,7 +12,7 @@ public:
     
     void lex(std::string filepath);
     void parse();
-    void start(std::string filepath);
+    bool start(std::string filepath);
 
     void printAST();
 
@@ -24,6 +24,8 @@ private:
     bool hasParsed;
 
     size_t tabCount;
+    size_t errorCount;
+    int errorLine;
 
     std::vector<char> cellar;
 
