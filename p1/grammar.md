@@ -1,3 +1,4 @@
+https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md
 # Grammar
 [official go-lang notation documentation] (https://golang.org/ref/spec#Notation)
 - [Starting Point] (https://github.com/cschmidt74/CCLab/blob/master/p1/grammar.md#startingpoint)
