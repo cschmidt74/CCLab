@@ -1,7 +1,7 @@
 #include "Parser.h"
 
 Parser::Parser() {
-    DEBUG = false;
+    DEBUG = true;
     timeout = 0;
     tabCount = 0;
     hasParsed = false;

@@ -127,10 +127,14 @@ bool Lexer::splitLine(std::string line, int lineNumber) {
             if (!data.empty()) {
                 currentChar = data.back();
                 data.pop_back();
-                while (isLetterOrNumber(currentChar)&&!data.empty()) {
+                while (isLetterOrNumber(currentChar)) {
                     tokenValue += currentChar;
-                    currentChar = data.back();
-                    data.pop_back();
+                    if(!data.empty()){
+                        currentChar = data.back();
+                        data.pop_back();
+                    } else {
+                        break;
+                    }
                 }
             }
 
