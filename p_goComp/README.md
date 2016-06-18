@@ -6,8 +6,8 @@ PackageClause -> "package" identifier ";"
 identifier -> letter(letter|number|"_")*
 _
 FunctionDecl -> "func" identifier Function
-Function -> "(" ParamDeclList ")" FunctionBody	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-ParamDeclList -> ParamDeclList "," Decleration | Decleration | € //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Function -> "(" ParamDeclList ")" FunctionBody	
+ParamDeclList -> ParamDeclList "," Decleration | Decleration | € 
 _
 FunctionBody -> "{" StatementList "}"
 StatementList -> StatementList Statement ";" | €
@@ -17,8 +17,8 @@ _
 Decleration -> "var" identifier "int" "=" Expression 
 			 | "var" identifier "string" "=" string_literal
 			 | "var" identifier "string" "=" identifier
-			 | "var" identifier "int"	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			 | "var" identifier "string"	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			 | "var" identifier "int"	
+			 | "var" identifier "string"	
 _
 Expression -> Term | Expression "+" Term | Expression "-" Term
 Term -> Number | Term "*" Number | Term "/" Number
