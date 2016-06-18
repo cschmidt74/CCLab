@@ -23,6 +23,7 @@ class NCall;
 //Lists
 typedef std::vector<NParameter*> ParameterList;
 typedef std::vector<NStatement*> StatementList;
+typedef std::vector<NDecleration*> ParamDeclList;
 
 
 class Node{
@@ -94,10 +95,10 @@ public:
 class NFunction : public Node {
     //Function -> "(" ParameterList ")" FunctionBody
 public:
-    ParameterList cParameterList;
+    ParamDeclList cParamDeclList;
     NFunctionBody* cFunctionBody;
-    NFunction(ParameterList& _cParameterList, NFunctionBody* _cFunctionBody)
-    : cParameterList(_cParameterList), cFunctionBody(_cFunctionBody) {}
+    NFunction(ParamDeclList& _cParamDeclList, NFunctionBody* _cFunctionBody)
+    : cParamDeclList(_cParamDeclList), cFunctionBody(_cFunctionBody) {}
     NFunction(NFunctionBody* _cFunctionBody) 
     : cFunctionBody(_cFunctionBody) {}
 };
@@ -144,7 +145,9 @@ public:
 class NDecleration : public Node {
     /* Decleration -> "var" identifier "int" "=" Expression 
              | "var" identifier "string" "=" string_literal
-             | "var" identifier "string" "=" identifier */
+             | "var" identifier "string" "=" identifier 
+             | "var" identifier "int"
+             | "var" identifier "string" */
 public:
     Nidentifier* cidentifier;
     NExpression* cexpression;
@@ -156,6 +159,8 @@ public:
     : cidentifier(_cidentifier), cstring_literal(_cstring_literal), cexpression(nullptr), cidentifier2(nullptr) {}
     NDecleration(Nidentifier* _cidentifier, Nidentifier* _cidentifier2)
     : cidentifier(_cidentifier), cstring_literal(nullptr), cexpression(nullptr), cidentifier2(_cidentifier2) {}
+    NDecleration(Nidentifier* _cidentifier)
+    : cidentifier(_cidentifier), cexpression(nullptr), cstring_literal(nullptr), cidentifier2(nullptr) {}
 }; 
 
 class NExpression : public Node {

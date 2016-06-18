@@ -97,11 +97,12 @@ union YYSTYPE
 
     std::vector<NParameter*> *parametervec;
     std::vector<NStatement*> *statementvec;
+    std::vector<NDecleration*> *paramdeclvec;
 
     std::string *string;
     int token;
 
-#line 105 "parser.hpp" /* yacc.c:1909  */
+#line 106 "parser.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

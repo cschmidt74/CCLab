@@ -34,6 +34,7 @@
 
     std::vector<NParameter*> *parametervec;
     std::vector<NStatement*> *statementvec;
+    std::vector<NDecleration*> *paramdeclvec;
 
     std::string *string;
     int token;
@@ -63,6 +64,7 @@
 %type <call> CALL; 
 %type <parametervec> PARAMETERLIST;
 %type <statementvec> STATEMENTLIST;
+%type <paramdeclvec> PARAMDECLLIST;
 
 %start PROGRAM
 
@@ -101,9 +103,17 @@ FUNCTIONDECL : tfunc IDENTIFIER FUNCTION
 ;
 
 /* Function -> "(" ParameterList ")" FunctionBody */
-FUNCTION : tlparen PARAMETERLIST trparen FUNCTIONBODY 
+FUNCTION : tlparen PARAMDECLLIST trparen FUNCTIONBODY 
   { $$ = new NFunction(*$2, $4); delete $2; } 
 ;
+
+/* ParamDeclList -> ParamDeclList "," Decleration | Decleration | € */
+PARAMDECLLIST : PARAMDECLLIST tcomma DECLERATION
+  { $1->push_back($<decleration>3); }
+  | DECLERATION
+    { $$ = new ParamDeclList(); $$->push_back($<decleration>1); }
+  | /*epsilon*/
+    { $$ = new ParamDeclList(); }
 
 /* ParameterList -> ParameterList "," Parameter | Parameter | € */
 PARAMETERLIST : PARAMETERLIST tcomma PARAMETER 
@@ -148,13 +158,19 @@ STATEMENT : FUNCTIONBODY
 
 /* Decleration -> "var" identifier "int" "=" Expression 
        | "var" identifier "string" "=" string_literal
-       | "var" identifier "string" "=" identifier */
+       | "var" identifier "string" "=" identifier
+       | "var" identifier "int"
+       | "var" identifier "string" */
 DECLERATION : tvar IDENTIFIER tint tequalop EXPRESSION  
   { new NDecleration($2, $5); }
   | tvar IDENTIFIER tstring tequalop STRING_LITERAL
     { new NDecleration($2, $5); }
   | tvar IDENTIFIER tstring tequalop IDENTIFIER
     { new NDecleration($2, $5); }
+  | tvar IDENTIFIER tint 
+    { new NDecleration($2); }
+  | tvar IDENTIFIER tstring
+    { new NDecleration($2); }
 ;
 
 /* Expression -> Term | Expression "+" Term | Expression "-" Term */
